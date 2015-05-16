@@ -116,8 +116,8 @@ gulp.task('scripts', function () {
     'app/scripts/**/*.js'
   ];
   return gulp.src(sources)
-    .pipe($.concat('main.min.js'))
-    .pipe($.uglify({preserveComments: 'some'}))
+    //.pipe($.concat('main.min.js'))
+    //.pipe($.uglify({preserveComments: 'some'}))
     // Output files
     .pipe(gulp.dest('dist/scripts'))
     .pipe($.size({title: 'scripts'}));
@@ -169,7 +169,15 @@ gulp.task('serve', ['styles'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app']
+    server: {
+      baseDir: ['.tmp', 'app'],
+      routes: {
+        '/bower_components': 'bower_components',
+        '/jspm_packages': 'jspm_packages',
+        '/system.config.js':'system.config.js'
+      }
+    }//['.tmp', 'app']
+
   });
 
   gulp.watch(['app/**/*.html'], reload);

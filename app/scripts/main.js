@@ -99,3 +99,5 @@
 
   // Your custom JavaScript goes here
 })();
+import {bootstrap} from './bootstrap';
+bootstrap();
