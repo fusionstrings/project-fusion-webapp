@@ -2,6 +2,11 @@
 // Generated on Sat May 16 2015 16:29:10 GMT+0530 (IST)
 
 module.exports = function(config) {
+  var browser = 'PhantomJS';
+ 
+	if (process.env.NODE_ENV === 'development') {
+		browser = 'Chrome'; //chrome is much better, because it shows properly line numbers
+	}
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -10,14 +15,20 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha'],
+    frameworks: ['jspm', 'mocha', 'chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'app/scripts/**/*.spec.js'
+      //'app/**/*.spec.js'
     ],
 
+    jspm: {
+        // Edit this to your needs
+        config: "system.config.js",
+        loadFiles: ['app/**/*spec.js', 'test/**/*spec.js'],
+        serveFiles: ['app/**/*.js', 'app/**/*.html']
+    },
 
     // list of files to exclude
     exclude: [
@@ -27,13 +38,20 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'app/**/!(*spec).js': ['babel', 'coverage']
     },
 
+    // transpile with babel since the coverage reporter throws error on ES6 syntax
+    babelPreprocessor: {
+      options: {
+        modules: 'system'
+      }
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['mocha', 'coverage'],
 
 
     // web server port
@@ -55,7 +73,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: [browser],
 
 
     // Continuous Integration mode

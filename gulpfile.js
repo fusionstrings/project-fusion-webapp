@@ -41,6 +41,14 @@ gulp.task('jshint', function () {
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
+gulp.task('eslint', function () {
+  return gulp.src('app/scripts/**/*.js')
+    .pipe(reload({stream: true, once: true}))
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.if(!browserSync.active, $.eslint.failOnError()));
+});
+
 // Optimize images
 gulp.task('images', function () {
   return gulp.src('app/images/**/*')
@@ -86,7 +94,6 @@ gulp.task('styles', function () {
     'android >= 4.4',
     'bb >= 10'
   ];
-
 
 
   // For best performance, don't add Sass partials to `gulp.src`
@@ -160,7 +167,7 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', ['styles', 'eslint'], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -182,7 +189,7 @@ gulp.task('serve', ['styles'], function () {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/**/**/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
+  gulp.watch(['app/scripts/**/*.js'], ['eslint']);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -204,7 +211,7 @@ gulp.task('serve:dist', ['default'], function () {
 gulp.task('default', ['clean'], function (cb) {
   runSequence(
     'styles',
-    ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
+    ['eslint', 'html', 'scripts', 'images', 'fonts', 'copy'],
     'generate-service-worker',
     cb);
 });

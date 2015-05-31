@@ -1,6 +1,5 @@
-import $ from 'jquery';
-import './main.css!';
+'use strict';
 export function bootstrap() {
-  // bootstrap code here
-  console.log('Project Fusion started');
+  //bootstrap code here
+  console.log('Project-Fusion started!');
 }

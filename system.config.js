@@ -33,7 +33,24 @@ System.config({
       "app/scripts/main.css!github:systemjs/plugin-css@0.1.10"
     ],
     "app/scripts/main": [
-      "app/scripts/bootstrap"
+      "app/scripts/bootstrap",
+      "app/scripts/hello"
+    ],
+    "npm:core-js@0.9.7/library/modules/$": [
+      "npm:core-js@0.9.7/library/modules/$.fw"
+    ],
+    "npm:core-js@0.9.7/library/fn/object/define-property": [
+      "npm:core-js@0.9.7/library/modules/$"
+    ],
+    "npm:babel-runtime@5.2.17/core-js/object/define-property": [
+      "npm:core-js@0.9.7/library/fn/object/define-property"
+    ],
+    "npm:babel-runtime@5.2.17/helpers/create-class": [
+      "npm:babel-runtime@5.2.17/core-js/object/define-property"
+    ],
+    "app/scripts/hello": [
+      "npm:babel-runtime@5.2.17/helpers/create-class",
+      "npm:babel-runtime@5.2.17/helpers/class-call-check"
     ]
   }
 });
@@ -42,6 +59,7 @@ System.config({
   "map": {
     "babel": "npm:babel-core@5.2.17",
     "babel-runtime": "npm:babel-runtime@5.2.17",
+    "chai": "npm:chai@2.3.0",
     "core-js": "npm:core-js@0.9.7",
     "css": "github:systemjs/plugin-css@0.1.10",
     "jquery": "github:components/jquery@2.1.4",
@@ -102,6 +120,13 @@ System.config({
       "ieee754": "npm:ieee754@1.1.5",
       "is-array": "npm:is-array@1.0.1"
     },
+    "npm:chai@2.3.0": {
+      "assertion-error": "npm:assertion-error@1.0.0",
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "deep-eql": "npm:deep-eql@0.1.3",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
     "npm:clean-css@3.1.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "commander": "npm:commander@2.6.0",
@@ -126,6 +151,10 @@ System.config({
     },
     "npm:core-util-is@1.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0"
+    },
+    "npm:deep-eql@0.1.3": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "type-detect": "npm:type-detect@0.1.1"
     },
     "npm:events-browserify@0.0.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
